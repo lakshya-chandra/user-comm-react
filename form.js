@@ -1,0 +1,103 @@
+import React from "react";
+
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      Name: "",
+      age: "",
+      email: "",
+      gender: "",
+      city: ""
+    };
+  }
+  onSubmit(e) {
+    e.preventDefault();
+    console.log(this.state);
+    let array = [];
+    let data = JSON.parse(localStorage.getItem("member"));
+    if (data != null) {
+      data.map(function(v) {
+        array.push(v);
+      });
+    }
+    array.push(this.state);
+    console.log(array);
+    localStorage.setItem("member", JSON.stringify(array));
+    document.write("Thankyou for registration." + " " + this.state.Name);
+  }
+
+  render() {
+    return (
+      <form onSubmit={e => this.onSubmit(e)}>
+        <div className="form-group">
+          <label htmlFor="name">Name-</label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            placeholder="Name"
+            value={this.state.Name}
+            onChange={e => this.setState({ Name: e.target.value })}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="age">Age-</label>
+          <input
+            type="text"
+            className="form-control"
+            id="age"
+            placeholder="Age"
+            value={this.state.age}
+            onChange={e => this.setState({ age: e.target.value })}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="Email">Email-</label>
+          <input
+            type="text"
+            className="form-control"
+            id="email"
+            placeholder="Email"
+            value={this.state.email}
+            onChange={e => this.setState({ email: e.target.value })}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="Gender">Gender-</label>
+          <select
+            value={this.state.gender}
+            onChange={e => this.setState({ gender: e.target.value })}
+          >
+            <option value="male">male</option>
+            <option value="female">female</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="city">City-</label>
+          <select
+            value={this.state.city}
+            onChange={e => this.setState({ city: e.target.value })}
+          >
+            <option value="lucknow">lucknow</option>
+            <option value="pune">pune</option>
+            <option value="banglore">banglore</option>
+            <option value="ghaziabad">ghaziabad</option>
+            <option value="amritsar">amritsar</option>
+          </select>
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+        {/* <button
+          type="submit"
+          className="btn btn-primary"
+        >
+          All members
+        </button> */}
+      </form>
+    );
+  }
+}
+
+export default Form;
